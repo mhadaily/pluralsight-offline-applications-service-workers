@@ -38,8 +38,15 @@ class Router {
 
   /**
    * Load view manifest to get hashed view filenames
+   * Only attempts to load in production (when Vite generates the manifest)
    */
   async loadViewManifest() {
+    // Skip manifest loading in development mode
+    if (import.meta.env.DEV) {
+      console.log('[Router] 🔧 Development mode - skipping view manifest');
+      return;
+    }
+
     try {
       // Try to fetch the view manifest directly first
       const response = await fetch('/view-manifest.js');
