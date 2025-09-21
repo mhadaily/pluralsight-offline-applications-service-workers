@@ -1,0 +1,72 @@
+<div class="container">
+  <!-- Header -->
+  <section class="header mb-6">
+    <div class="text-center mb-4">
+      <h1>Travel Ideas</h1>
+      <p class="text-secondary">
+        Capture and organize your travel inspiration. Ideas are saved locally
+        and synced when online.
+      </p>
+    </div>
+  </section>
+
+  <!-- Add Idea Form -->
+  <section class="add-idea mb-6">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Add New Idea</h3>
+      </div>
+      <div class="card-content">
+        <form id="idea-form">
+          <div class="form-group">
+            <label for="idea-input" class="form-label"
+              >What's your travel idea?</label
+            >
+            <input
+              type="text"
+              id="idea-input"
+              class="form-input"
+              placeholder="e.g., Weekend getaway to the mountains..."
+              required
+              maxlength="200"
+            />
+          </div>
+          <div class="flex gap-2">
+            <button type="submit" class="btn btn-primary">Add Idea</button>
+            <button type="button" id="clear-ideas" class="btn btn-secondary">
+              Clear All
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ideas List -->
+  <section class="ideas-list">
+    <div class="flex items-center justify-between mb-4">
+      <h2>Your Ideas</h2>
+      <div
+        style="font-size: 0.875rem; color: var(--text-secondary)"
+        id="storage-info"
+      >
+        {{STORAGE_INFO}}
+      </div>
+    </div>
+
+    <div class="ideas-container">{{IDEAS}}</div>
+  </section>
+
+  <!-- Tips Section -->
+  <section class="tips mt-8">
+    <div class="pro-tips">
+      <h4>💡 Pro Tips</h4>
+      <ul>
+        <li>Ideas are automatically saved as you type</li>
+        <li>All data works offline and syncs when connected</li>
+        <li>Use descriptive keywords to make ideas easy to find later</li>
+        <li>Consider adding locations, dates, or budget estimates</li>
+      </ul>
+    </div>
+  </section>
+</div>

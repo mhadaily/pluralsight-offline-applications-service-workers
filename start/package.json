@@ -1,0 +1,34 @@
+{
+  "name": "travel-planner-offline",
+  "version": "1.0.0",
+  "description": "A beautiful travel planner web app",
+  "main": "src/index.html",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "api": "json-server --watch api/db.json --port 3001",
+    "start": "concurrently \"npm run api\" \"npm run dev\" --names \"API,UI\" --prefix-colors \"yellow,cyan\"",
+    "build": "vite build",
+    "preview": "vite preview",
+    "prod": "npm run build && concurrently \"npm run api\" \"npm run preview\" --names \"API,PROD\" --prefix-colors \"yellow,green\"",
+    "serve": "vite preview",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "keywords": [
+    "travel",
+    "vite"
+  ],
+  "author": "Travel Planner Team",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "json-server": "^0.17.4",
+    "prettier": "^3.3.3",
+    "vite": "^7.1.6"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

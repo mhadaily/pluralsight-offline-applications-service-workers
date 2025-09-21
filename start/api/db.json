@@ -1,0 +1,209 @@
+{
+  "deals": [
+    {
+      "id": 1,
+      "title": "Weekend in Rome",
+      "description": "Experience the eternal city with our amazing weekend package including flights, hotel, and guided tours of the Colosseum, Vatican, and Trevi Fountain.",
+      "price": 299,
+      "originalPrice": 399,
+      "category": "city",
+      "destination": "Rome, Italy",
+      "imageUrl": "/fallback-image.png",
+      "rating": 4.8,
+      "reviewCount": 142,
+      "bookings": 1250,
+      "duration": "3 days, 2 nights",
+      "includes": [
+        "Round-trip flights",
+        "Hotel accommodation",
+        "Guided tours",
+        "Breakfast"
+      ],
+      "highlights": [
+        "Colosseum skip-the-line",
+        "Vatican Museums",
+        "Authentic Italian dinner"
+      ],
+      "createdAt": "2025-09-18T10:00:00Z",
+      "validUntil": "2025-12-31T23:59:59Z"
+    },
+    {
+      "id": 2,
+      "title": "Bali Beach Retreat",
+      "description": "Relax on pristine beaches with our 5-day Bali package. Includes luxury resort accommodation, spa treatments, and traditional Balinese experiences.",
+      "price": 599,
+      "originalPrice": 799,
+      "category": "beach",
+      "destination": "Bali, Indonesia",
+      "imageUrl": "/fallback-image.png",
+      "rating": 4.9,
+      "reviewCount": 89,
+      "bookings": 856,
+      "duration": "5 days, 4 nights",
+      "includes": [
+        "Luxury resort stay",
+        "Daily breakfast",
+        "Spa treatments",
+        "Airport transfers"
+      ],
+      "highlights": [
+        "Private beach access",
+        "Traditional massage",
+        "Sunset dinner cruise"
+      ],
+      "createdAt": "2025-09-19T14:30:00Z",
+      "validUntil": "2025-11-30T23:59:59Z"
+    },
+    {
+      "id": 3,
+      "title": "Swiss Alps Adventure",
+      "description": "Hiking and skiing in the beautiful Swiss Alps. Perfect for adventure seekers and nature lovers with breathtaking mountain views.",
+      "price": 899,
+      "originalPrice": 1199,
+      "category": "mountain",
+      "destination": "Swiss Alps, Switzerland",
+      "imageUrl": "/fallback-image.png",
+      "rating": 4.7,
+      "reviewCount": 203,
+      "bookings": 432,
+      "duration": "7 days, 6 nights",
+      "includes": [
+        "Mountain lodge accommodation",
+        "Ski equipment rental",
+        "Guided hikes",
+        "All meals"
+      ],
+      "highlights": [
+        "Matterhorn views",
+        "Alpine skiing",
+        "Mountain railway experience"
+      ],
+      "createdAt": "2025-09-15T08:15:00Z",
+      "validUntil": "2026-03-31T23:59:59Z"
+    },
+    {
+      "id": 4,
+      "title": "Tokyo Culture Experience",
+      "description": "Immerse yourself in Japanese culture with visits to temples, traditional gardens, and authentic local experiences in the heart of Tokyo.",
+      "price": 1299,
+      "originalPrice": 1599,
+      "category": "culture",
+      "destination": "Tokyo, Japan",
+      "imageUrl": "/fallback-image.png",
+      "rating": 4.9,
+      "reviewCount": 156,
+      "bookings": 678,
+      "duration": "6 days, 5 nights",
+      "includes": [
+        "Boutique hotel stay",
+        "Cultural workshops",
+        "Temple visits",
+        "Traditional meals"
+      ],
+      "highlights": [
+        "Tea ceremony",
+        "Sushi making class",
+        "Cherry blossom viewing"
+      ],
+      "createdAt": "2025-09-17T12:45:00Z",
+      "validUntil": "2026-04-30T23:59:59Z"
+    },
+    {
+      "id": 5,
+      "title": "Patagonia Wilderness Trek",
+      "description": "Epic adventure through the wild landscapes of Patagonia. Experience glaciers, mountains, and pristine wilderness on this unforgettable journey.",
+      "price": 1899,
+      "originalPrice": 2299,
+      "category": "adventure",
+      "destination": "Patagonia, Chile & Argentina",
+      "imageUrl": "/fallback-image.png",
+      "rating": 4.8,
+      "reviewCount": 78,
+      "bookings": 234,
+      "duration": "10 days, 9 nights",
+      "includes": [
+        "Camping equipment",
+        "Expert guides",
+        "All meals",
+        "Transportation"
+      ],
+      "highlights": [
+        "Glacier trekking",
+        "Wildlife spotting",
+        "Stargazing sessions"
+      ],
+      "createdAt": "2025-09-16T16:20:00Z",
+      "validUntil": "2026-02-28T23:59:59Z"
+    },
+    {
+      "id": 6,
+      "title": "Tuscany Wine Tour",
+      "description": "Discover the finest wines and cuisine of Tuscany. Visit historic vineyards, charming hilltop towns, and enjoy authentic Italian hospitality.",
+      "price": 799,
+      "originalPrice": 999,
+      "category": "food",
+      "destination": "Tuscany, Italy",
+      "imageUrl": "/fallback-image.png",
+      "rating": 4.6,
+      "reviewCount": 92,
+      "bookings": 456,
+      "duration": "4 days, 3 nights",
+      "includes": [
+        "Vineyard accommodation",
+        "Wine tastings",
+        "Cooking classes",
+        "Meals"
+      ],
+      "highlights": [
+        "Chianti wine region",
+        "Cooking with locals",
+        "Historic town visits"
+      ],
+      "createdAt": "2025-09-14T09:30:00Z",
+      "validUntil": "2025-10-31T23:59:59Z"
+    }
+  ],
+  "categories": [
+    {
+      "id": "beach",
+      "name": "Beach",
+      "icon": "🏖️",
+      "description": "Tropical getaways and coastal relaxation"
+    },
+    {
+      "id": "mountain",
+      "name": "Mountain",
+      "icon": "🏔️",
+      "description": "Alpine adventures and scenic peaks"
+    },
+    {
+      "id": "city",
+      "name": "City",
+      "icon": "🏛️",
+      "description": "Urban exploration and cultural experiences"
+    },
+    {
+      "id": "adventure",
+      "name": "Adventure",
+      "icon": "🎢",
+      "description": "Thrilling outdoor activities and expeditions"
+    },
+    {
+      "id": "culture",
+      "name": "Culture",
+      "icon": "🎭",
+      "description": "Traditional experiences and local immersion"
+    },
+    {
+      "id": "food",
+      "name": "Food & Wine",
+      "icon": "🍷",
+      "description": "Culinary tours and gastronomic adventures"
+    }
+  ],
+  "health": {
+    "status": "ok",
+    "timestamp": "2025-09-20T00:00:00Z",
+    "version": "1.0.0"
+  }
+}

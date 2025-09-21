@@ -1,0 +1,199 @@
+<div class="container">
+  <section class="header mb-6">
+    <div class="text-center mb-4">
+      <h1>Settings</h1>
+      <p class="text-secondary">
+        Manage your app preferences, view debug information, and control service
+        worker behavior.
+      </p>
+    </div>
+  </section>
+
+  <section class="app-status mb-6">
+    <h2 class="mb-4">App Status</h2>
+    {{STATUS}}
+  </section>
+
+  <section class="debug-info mb-6">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Debug Information</h3>
+      </div>
+      <div class="card-content">
+        <div class="debug-grid grid grid-cols-2">
+          <div>
+            <h4 style="margin-bottom: 0.5rem">Browser Support</h4>
+            <ul style="font-size: 0.875rem; margin: 0; padding-left: 1.5rem">
+              <li id="sw-support">
+                Service Workers: <span class="status">Not used</span>
+              </li>
+              <li id="cache-support">
+                Cache API: <span class="status">Not used</span>
+              </li>
+              <li id="bc-support">
+                BroadcastChannel: <span class="status">Not used</span>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 style="margin-bottom: 0.5rem">Cache Information</h4>
+            <div id="cache-info" style="font-size: 0.875rem">
+              Not applicable in simplified app
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="data-management">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Data Management</h3>
+      </div>
+      <div class="card-content">
+        <p class="mb-4" style="color: var(--text-secondary)">
+          Export your travel ideas for backup or import previously saved data.
+        </p>
+
+        <div class="flex gap-3">
+          <button id="export-data" class="btn btn-secondary">
+            \\ud83d\\udce4 Export Data
+          </button>
+          <button id="import-data" class="btn btn-secondary">
+            \\ud83d\\udce5 Import Data
+          </button>
+          <input
+            type="file"
+            id="import-file"
+            accept=".json"
+            style="display: none"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+  .demo-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    cursor: not-allowed;
+  }
+
+  .demo-toggle input[type='checkbox'] {
+    margin: 0;
+  }
+
+  .demo-toggle input[type='checkbox']:disabled {
+    opacity: 0.5;
+  }
+
+  .status {
+    font-weight: 600;
+  }
+
+  .status.supported {
+    color: var(--success);
+  }
+
+  .status.not-supported {
+    color: var(--error);
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .status-badge.enabled {
+    background: var(--success-light, #d4edda);
+    color: var(--success-dark, #155724);
+  }
+
+  .status-badge.disabled {
+    background: var(--warning-light, #fff3cd);
+    color: var(--warning-dark, #856404);
+  }
+
+  .status-badge.checking {
+    background: var(--info-light, #d1ecf1);
+    color: var(--info-dark, #0c5460);
+  }
+
+  .sw-status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document
+      .getElementById('export-data')
+      ?.addEventListener('click', async () => {
+        try {
+          const data = {
+            version: '1.0',
+            timestamp: Date.now(),
+            data: {
+              ideas: window.travelApp ? await window.travelApp.getIdeas() : [],
+            },
+          };
+
+          const blob = new Blob([JSON.stringify(data, null, 2)], {
+            type: 'application/json',
+          });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `travel-planner-backup-${
+            new Date().toISOString().split('T')[0]
+          }.json`;
+          a.click();
+          URL.revokeObjectURL(url);
+        } catch (error) {
+          alert('Failed to export data: ' + error.message);
+        }
+      });
+
+    document.getElementById('import-data')?.addEventListener('click', () => {
+      document.getElementById('import-file').click();
+    });
+
+    document
+      .getElementById('import-file')
+      ?.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        try {
+          const text = await file.text();
+          const data = JSON.parse(text);
+
+          if (
+            confirm(
+              `Import ${
+                data.data?.ideas?.length || 0
+              } ideas? This will replace existing data.`
+            )
+          ) {
+            alert('Import functionality requires IndexedDB demo to be enabled');
+          }
+        } catch (error) {
+          alert('Failed to import data: ' + error.message);
+        }
+      });
+  });
+</script>

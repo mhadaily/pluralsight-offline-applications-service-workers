@@ -1,0 +1,7 @@
+{
+  "name": "Travel Planner (simplified)",
+  "short_name": "Travel",
+  "description": "Simplified app — PWA manifest removed; placeholder file.",
+  "start_url": "/",
+  "display": "standalone"
+}
