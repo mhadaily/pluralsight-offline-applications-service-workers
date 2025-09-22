@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "A beautiful travel planner web app",
   "main": "src/index.html",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "api": "json-server --watch api/db.json --port 3001",
@@ -21,7 +20,9 @@
   ],
   "author": "Travel Planner Team",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "workbox-precaching": "^7.3.0"
+  },
   "devDependencies": {
     "concurrently": "^9.2.1",
     "json-server": "^0.17.4",
