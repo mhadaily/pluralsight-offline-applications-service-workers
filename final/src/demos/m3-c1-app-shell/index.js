@@ -17,6 +17,7 @@ console.log('[DEMO M3-C1] 🏗️ App Shell Architecture demo loaded');
 // ========================================
 
 const APP_SHELL_CACHE = self.CACHE_NAMES?.M3_C1_APP_SHELL || 'app-shell-v1.0.0';
+// these must be final production assets
 const APP_SHELL_RESOURCES = [
   '/',
   '/src/index.html',

@@ -14,7 +14,24 @@ class TravelPlannerApp {
       showLoading();
       await this.setupEventListeners();
 
+
+
+
+
+      
+
+      // await this.unregisterServiceWorker();
       await this.registerServiceWorker();
+
+
+
+
+
+
+
+
+
+
 
       await this.loadInitialData();
       await this.initializeRouter();
@@ -35,6 +52,17 @@ class TravelPlannerApp {
           </div>
         </div>
       `;
+    }
+  }
+
+  async unregisterServiceWorker() {
+    if ('serviceWorker' in navigator) {
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      for (let registration of registrations) {
+        registration.unregister().then(function () {
+          console.log('Service Worker unregistered successfully.');
+        });
+      }
     }
   }
 
@@ -232,6 +260,67 @@ class TravelPlannerApp {
       online: this.isOnline,
       ideas: this.ideas.length,
     };
+  }
+
+  async activateUpdate() {
+    try {
+      const updateBtn = document.getElementById('update-btn');
+      const banner = document.getElementById('update-banner');
+      if (updateBtn) {
+        updateBtn.disabled = true;
+        updateBtn.textContent = 'Activating...';
+      }
+
+      if (banner) {
+        // keep banner visible but indicate progress
+        banner.classList.add('animate-pulse');
+      }
+
+      if (this.swRegistration?.waiting) {
+        this.swRegistration.waiting.postMessage({ type: 'SKIP_WAITING' });
+
+        const timeout = 5000;
+        let timedOut = false;
+
+        await Promise.race([
+          new Promise((resolve) => {
+            function onControllerChange() {
+              navigator.serviceWorker.removeEventListener(
+                'controllerchange',
+                onControllerChange
+              );
+              resolve();
+            }
+
+            navigator.serviceWorker.addEventListener(
+              'controllerchange',
+              onControllerChange
+            );
+          }),
+          new Promise((resolve) =>
+            setTimeout(() => {
+              timedOut = true;
+              resolve();
+            }, timeout)
+          ),
+        ]);
+
+        if (timedOut) {
+          showToast('Activated update (fallback reload)', 'info');
+        } else {
+          showToast('Update activated — reloading', 'success');
+        }
+
+        if (banner) banner.classList.add('hidden');
+        window.location.reload();
+      } else {
+        if (banner) banner.classList.add('hidden');
+        window.location.reload();
+      }
+    } catch (error) {
+      showToast('Failed to activate update — reloading', 'error');
+      window.location.reload();
+    }
   }
 }
 
