@@ -14,24 +14,8 @@ class TravelPlannerApp {
       showLoading();
       await this.setupEventListeners();
 
-
-
-
-
-      
-
       // await this.unregisterServiceWorker();
       await this.registerServiceWorker();
-
-
-
-
-
-
-
-
-
-
 
       await this.loadInitialData();
       await this.initializeRouter();
@@ -77,6 +61,25 @@ class TravelPlannerApp {
         scope: '/',
       });
 
+      if ('periodicSync' in registration) {
+        const status = await navigator.permissions.query({
+          name: 'periodic-background-sync',
+        });
+        if (status.state === 'granted') {
+          const ONE_HOUR = 60 * 60 * 1000;
+          await registration.periodicSync.register('tips-sync', {
+            minInterval: ONE_HOUR,
+          });
+          console.log(
+            '[PBS] ✅ Registered periodic sync: tips-sync (~1h requested)'
+          );
+        } else {
+          console.log(
+            'Periodic background sync permission denied or not granted.'
+          );
+        }
+      }
+
       this.swRegistration = registration;
 
       console.log('✅ Service Worker registered:', {
@@ -108,6 +111,12 @@ class TravelPlannerApp {
       if (registration.waiting) {
         this.showUpdateBanner();
       }
+
+      navigator.serviceWorker.addEventListener('message', (event) => {
+        if (event.data && event.data.type === 'SYNC_SUCCESS') {
+          showToast(event.data.message, 'success');
+        }
+      });
     } catch (error) {
       console.error('❌ Service Worker registration failed:', error);
     }
@@ -238,8 +247,54 @@ class TravelPlannerApp {
       text,
       timestamp: Date.now(),
     };
-    this.ideas.unshift(idea);
-    return idea;
+
+    if (this.isOnline) {
+      this.ideas.unshift(idea);
+      return idea;
+    } else {
+      await this.queueIdeaForSync(idea);
+      this.ideas.unshift(idea);
+      showToast('Idea saved offline - will sync when online', 'warning');
+      return idea;
+    }
+  }
+
+  async queueIdeaForSync(idea) {
+    try {
+      await this.saveToQueue(idea);
+
+      if (this.swRegistration && 'sync' in this.swRegistration) {
+        await this.swRegistration.sync.register('background-sync-ideas');
+        console.log('📤 Background sync registered for idea:', idea.text);
+      }
+    } catch (error) {
+      console.error('Failed to queue idea for sync:', error);
+    }
+  }
+
+  async saveToQueue(idea) {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open('TravelPlannerDB', 1);
+
+      request.onerror = () => reject(request.error);
+
+      request.onupgradeneeded = (event) => {
+        const db = event.target.result;
+        if (!db.objectStoreNames.contains('queuedIdeas')) {
+          db.createObjectStore('queuedIdeas', { keyPath: 'id' });
+        }
+      };
+
+      request.onsuccess = (event) => {
+        const db = event.target.result;
+        const transaction = db.transaction(['queuedIdeas'], 'readwrite');
+        const store = transaction.objectStore('queuedIdeas');
+        const addRequest = store.add(idea);
+
+        addRequest.onsuccess = () => resolve();
+        addRequest.onerror = () => reject(addRequest.error);
+      };
+    });
   }
 
   async clearIdeas() {
